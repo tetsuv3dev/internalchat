@@ -8,7 +8,8 @@ export function connectSocket(token: string): Socket {
     return socket;
   }
 
-  socket = io({
+  // Connect to the same host the page was loaded from (works with any IP)
+  socket = io(window.location.origin, {
     auth: { token },
     transports: ['websocket', 'polling'],
     reconnection: true,

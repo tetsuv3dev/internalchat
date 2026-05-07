@@ -1,6 +1,6 @@
 # InternalChat
 
-A lightweight, cross-platform real-time chat application built with Node.js, Express, Socket.io, React, and TailwindCSS.
+A lightweight, cross-platform real-time chat application built with Node.js, Express, Socket.io, React, and TailwindCSS. Runs directly via IP address -- no domain or Docker required.
 
 ## Features
 
@@ -18,48 +18,69 @@ A lightweight, cross-platform real-time chat application built with Node.js, Exp
 
 **Backend:** Node.js, Express, Socket.io, better-sqlite3, JWT
 **Frontend:** React 18, TypeScript, Vite, TailwindCSS, Zustand, highlight.js
-**DevOps:** Docker, Docker Compose, Nginx
 
 ## Quick Start
 
 ### Prerequisites
 - Node.js 20+
-- npm
 
-### Backend Setup
+### 1. Install dependencies
 
 ```bash
-cd backend
-npm install
-npm run seed     # Creates default channels and a registration token
-npm start        # Starts server on port 3001
+cd backend && npm install
+cd ../frontend && npm install
 ```
 
-### Frontend Setup
+### 2. Build the frontend
 
 ```bash
 cd frontend
-npm install
-npm run dev      # Starts dev server on port 5173
+npm run build
 ```
 
-### Docker Setup
+### 3. Seed the database (first time only)
 
 ```bash
-docker-compose up --build
+cd backend
+npm run seed
 ```
 
-The app will be available at `http://localhost:5173`.
+This creates default channels and prints a registration token.
 
-## Getting Started
+### 4. Start the server
 
-1. Start the backend server
-2. Generate a registration token:
-   ```bash
-   curl -X POST http://localhost:3001/api/admin/tokens/generate
-   ```
-3. Start the frontend
-4. Enter your nickname and the registration token to join
+```bash
+cd backend
+npm start
+```
+
+The app is now available at `http://<YOUR_IP>:3000`
+
+### 5. Register
+
+1. Open `http://<YOUR_IP>:3000` in any browser
+2. Enter a nickname and the registration token from step 3
+3. Start chatting
+
+### Generate more registration tokens
+
+```bash
+curl -X POST http://<YOUR_IP>:3000/api/admin/tokens/generate
+```
+
+## Development
+
+For local development with hot-reload:
+
+```bash
+# Terminal 1 - Backend
+cd backend && npm run dev
+
+# Terminal 2 - Frontend (proxies API to backend)
+cd frontend && npm run dev
+```
+
+Frontend dev server runs on port 5173 and proxies `/api` and `/socket.io` to the backend on port 3000.
 
 ## Project Structure
 
@@ -72,9 +93,9 @@ internalchat/
       messages/      # Message CRUD routes
       websocket/     # Socket.io event handlers
       database/      # SQLite migration and seed
-      middleware/     # Auth and validation middleware
+      middleware/    # Auth and validation middleware
       config.js      # Configuration
-      index.js       # Server entry point
+      index.js       # Server entry point (serves frontend)
   frontend/
     src/
       components/
@@ -86,7 +107,6 @@ internalchat/
       styles/        # TailwindCSS and highlight.js theme
   docs/
     API.md           # API documentation
-  docker-compose.yml
 ```
 
 ## Responsive Breakpoints
@@ -100,7 +120,13 @@ internalchat/
 
 ## Environment Variables
 
-See `backend/.env.example` for all configuration options.
+See `backend/.env.example` for all configuration options. Key settings:
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `PORT` | `3000` | Server port |
+| `JWT_SECRET` | dev default | Change in production |
+| `DB_PATH` | `./data/chat.db` | SQLite database path |
 
 ## API Documentation
 
