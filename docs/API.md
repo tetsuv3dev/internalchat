@@ -2,7 +2,7 @@
 
 ## Base URL
 ```
-http://localhost:3001/api
+http://<YOUR_IP>:3322/api
 ```
 
 ## Authentication
@@ -154,7 +154,7 @@ Content types: `text`, `code`, `video`, `file`
 
 Connect via Socket.io with authentication:
 ```javascript
-const socket = io('http://localhost:3001', {
+const socket = io('http://<YOUR_IP>:3322', {
   auth: { token: accessToken }
 });
 ```

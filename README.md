@@ -54,18 +54,18 @@ cd backend
 npm start
 ```
 
-The app is now available at `http://<YOUR_IP>:3000`
+The app is now available at `http://<YOUR_IP>:3322`
 
 ### 5. Register
 
-1. Open `http://<YOUR_IP>:3000` in any browser
+1. Open `http://<YOUR_IP>:3322` in any browser
 2. Enter a nickname and the registration token from step 3
 3. Start chatting
 
 ### Generate more registration tokens
 
 ```bash
-curl -X POST http://<YOUR_IP>:3000/api/admin/tokens/generate
+curl -X POST http://<YOUR_IP>:3322/api/admin/tokens/generate
 ```
 
 ## Development
@@ -80,7 +80,7 @@ cd backend && npm run dev
 cd frontend && npm run dev
 ```
 
-Frontend dev server runs on port 5173 and proxies `/api` and `/socket.io` to the backend on port 3000.
+Frontend dev server runs on port 5173 and proxies `/api` and `/socket.io` to the backend on port 3322.
 
 ## Project Structure
 
@@ -124,7 +124,7 @@ See `backend/.env.example` for all configuration options. Key settings:
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `PORT` | `3000` | Server port |
+| `PORT` | `3322` | Server port |
 | `JWT_SECRET` | dev default | Change in production |
 | `DB_PATH` | `./data/chat.db` | SQLite database path |
 
